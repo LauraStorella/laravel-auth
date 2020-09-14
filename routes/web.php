@@ -21,11 +21,21 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 // Route group Admin
+//   --> richiesta Autenticazione
+//   --> esegue operazioni CRUD
 Route::prefix('admin')
     ->namespace('Admin')
     ->middleware('auth')
+    ->name('admin.')
     ->group(function () {
         Route::resource('/posts', 'PostController');
     // ->name('admin');
 });
+
+
+// Route Guest (user anonimo - non loggato)
+//   --> pubblica
+//   --> ammette solo operazioni Index - Show (escluso nome Autore dei post)
+Route::get('/posts', 'PostController@index')->name('posts.index');
