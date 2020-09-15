@@ -29,8 +29,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        return view('admin.posts.create');
     }
 
     /**
@@ -41,7 +41,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::check()) {
+            $data = $request->all();
+            // dd($data);
+
+            $path = $request->file('image_url')->store('images', 'public');
+
+            // Creo nuova istanza Post
+            $new_post = new Post();
+            $new_post->user_id = Auth::id();
+            $new_post->title = $data['title'];
+            $new_post->image_url = $path;
+            $new_post->content = $data['content'];
+            $new_post->save();
+
+            // Redirect area pubblica
+            // return redirect()->route('posts.show', $new_post);
+        }  
+
+        // in alternativa
+        // if (!Auth::check()) {
+        //     abort('404');
+        // }
     }
 
     /**

@@ -8,6 +8,10 @@
         <h1>Benvenuto/a {{ $user->name }}! Questa è la lista dei post</h1>
         </div>
 
+        <div>
+          <a href="{{ route('admin.posts.create') }}" class="btn btn-secondary btn-sm">Crea nuovo Post</a>
+        </div>
+
         <ul>
           @foreach ($posts as $post)
             <li><strong>Autore:</strong> {{ $post->user->name}} - <strong>Titolo:</strong> {{ $post->title}}
